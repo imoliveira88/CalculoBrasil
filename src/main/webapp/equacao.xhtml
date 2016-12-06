@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cálculo Brasil</title>
+        <h:outputStylesheet library="css" name="geral.css" />
+    </h:head>
+    <h:body>
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+            <h2>Equações do segundo grau</h2>         
+            <table id="corpo" align="center">
+                <tr>
+                    <td>
+                        <h:form id="formEquacao">
+                        <p:fieldset legend="Equações do segundo grau" style="margin-bottom:20px">
+                            <p:growl for="destinoAviso" id="growl" autoUpdate="true" showDetail="true"/>
+                            <h:panelGrid columns="2" cellpadding="5">
+
+                                <h:outputText value="Coeficiente a: " />
+                                <h:inputText id="a" value="#{equacoesBean.a}" size="3" />
+                                
+                                <h:outputText value="Coeficiente b: " />
+                                <h:inputText id="b" value="#{equacoesBean.b}" size="3" />
+                                
+                                <h:outputText value="Coeficiente c: " />
+                                <h:inputText id="c" value="#{equacoesBean.c}" size="3" />
+                                                                
+                                <h:commandButton value="Resolva!" action="#{equacoesBean.resolver()}" class="botao" />
+                                <h:outputText id="oculto" value="" />
+                                
+                                <h:outputText value="Primeira raiz: " />
+                                <h:outputText value="#{equacoesBean.r1}" />
+                                
+                                <h:outputText value="Segunda raiz: " />
+                                <h:outputText value="#{equacoesBean.r2}" />
+                                
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+                    </td>
+                </tr>
+            </table>
+        </ui:decorate>
+    </h:body>
+</html>
+
