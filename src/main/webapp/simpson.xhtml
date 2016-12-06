@@ -16,37 +16,31 @@
                     <td>
                         
                         <h:form id="formCN">
-                            <p:fieldset legend="Newton-Raphson" style="margin-bottom:20px">
+                            <p:fieldset legend="Regra de Simpson" style="margin-bottom:20px">
                                 <p:growl for="destinoAviso" id="growl" autoUpdate="true" showDetail="true"/>
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <h:outputText value="f(x) = " />
-                                    <h:inputText id="expressao" value="#{calculoNBean.expressaoFuncao}" size="40" />
+                                    <h:inputText id="expressao" value="#{simpsonBean.expressaoFuncao}" size="40" />
 
-                                    <h:outputText value="Limite à esquerda: " />
-                                    <h:inputText id="m" value="#{calculoNBean.m}" size="3" />
+                                    <h:outputText value="Limite inferior: " />
+                                    <h:inputText id="esq" value="#{simpsonBean.esquerda}" size="3" />
 
-                                    <h:outputText value="Limite à direita: " />
-                                    <h:inputText id="n" value="#{calculoNBean.n}" size="3" />
+                                    <h:outputText value="Limite superior: " />
+                                    <h:inputText id="dir" value="#{simpsonBean.direita}" size="3" />
 
-                                    <h:outputText value="Número máximo de iterações: " />
-                                    <h:inputText id="itmax" value="#{calculoNBean.itmax}" size="3" />
+                                    <h:outputText value="n: " />
+                                    <h:inputText id="n" value="#{simpsonBean.n}" size="3" />
 
-                                    <h:outputText value="Erro máximo: " />
-                                    <h:inputText id="erromax" value="#{calculoNBean.erromax}" size="3" />
-
-                                    <h:commandButton value="Resolva!" action="#{calculoNBean.resolver()}" class="botao" />
+                                    <h:commandButton value="Resolva!" action="#{simpsonBean.resolver()}" class="botao" />
                                     <h:outputText id="oculto" value="" />
 
-                                    <h:outputText value="Raiz aproximada: " />
-                                    <h:outputText value="#{calculoNBean.raizatual}" />
-
-                                    <h:outputText value="Número de iterações: " />
-                                    <h:outputText value="#{calculoNBean.iteracoes}" />
+                                    <h:outputText value="Integral aproximada: " />
+                                    <h:outputText value="#{simpsonBean.integral}" />
 
                                 </h:panelGrid>
 
-                                <p:dataTable var="x" value="#{calculoNBean.x}">
+                                <p:dataTable var="x" value="#{simpsonBean.iteracoes}">
                                     <p:column headerText="i">
                                         <h:outputText value="#{x.i}" />
                                     </p:column>
@@ -59,9 +53,6 @@
                                         <h:outputText value="#{x.f}" />
                                     </p:column>
 
-                                    <p:column headerText="Erro">
-                                        <h:outputText value="#{x.e}" />
-                                    </p:column>
                                 </p:dataTable>
 
                             </p:fieldset>

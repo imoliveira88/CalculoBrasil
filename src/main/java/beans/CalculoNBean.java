@@ -6,6 +6,9 @@
 package beans;
 
 import derivabr.NewtonRaphson;
+import derivabr.RaizIteracao;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -19,9 +22,10 @@ public class CalculoNBean extends BeanGeral{
     private double m,n,raizatual,erromax;
     private int iteracoes, itmax;
     private String expressaoFuncao;
+    private List<RaizIteracao> x;
     
     public CalculoNBean(){
-        
+        x = new ArrayList<>();
     }
 
     public double getM() {
@@ -30,6 +34,14 @@ public class CalculoNBean extends BeanGeral{
 
     public void setM(double m) {
         this.m = m;
+    }
+
+    public List<RaizIteracao> getX() {
+        return x;
+    }
+
+    public void setX(List<RaizIteracao> x) {
+        this.x = x;
     }
 
     public double getN() {
@@ -90,6 +102,8 @@ public class CalculoNBean extends BeanGeral{
         
         try{
             nr.resolve();
+            
+            x = nr.x;
 
             iteracoes = nr.iteracoes;
             raizatual = nr.raizatual;

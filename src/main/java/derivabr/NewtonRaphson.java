@@ -1,12 +1,8 @@
 package derivabr;
 
 import java.math.BigDecimal;
-
-/*
- * Objetiva achar raízes de funções da forma
- * f(x) = ax^2 + bx + c + dln(ex)+ fe^(gx) + hsen(ix)
- * derivada(f(x)) = 2ax + b + de/x + fge^(gx) + hicos(ix)
- */
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewtonRaphson {
 	
@@ -16,8 +12,10 @@ public class NewtonRaphson {
 	public double raizatual;
 	public int iteracoes = 0;
         public String expressaoFuncao;
+        public List<RaizIteracao> x;
 	
 	public NewtonRaphson(){
+                this.x = new ArrayList<>();
 		this.itmax = 0;
 		this.m = 0;
 		this.n = 0;
@@ -49,12 +47,14 @@ public class NewtonRaphson {
 		double erro = n-m;
 		double raizanterior;
 		raizatual = (m+n)/2;
+                x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"","--","0"));
 		do{
 			raizanterior = raizatual;
                         erro = (funcao(raizatual)).doubleValue()/(derivada(raizatual)).doubleValue();
                         raizatual -= erro;
                         
-			iteracoes++;
+                        x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"",erro+"",++iteracoes+""));
+   
 			erro = Math.abs(erro);
 		}while(iteracoes<itmax && erro>erromax);
 	}
