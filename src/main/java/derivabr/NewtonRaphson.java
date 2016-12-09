@@ -23,28 +23,17 @@ public class NewtonRaphson {
 	}
 	
 	public BigDecimal funcao(double x){
-		//StringImproved si = new StringImproved();
                 Arvore expressao = Arvore.stringToArvore(expressaoFuncao);
-                return expressao.avaliaArvore(x);
-                
-                //return BigDecimal.valueOf(Double.parseDouble(si.resolve(expressaoFuncao, x)));
-	}
+                return expressao.avaliaArvore(x);    
+        }
 	
 	public BigDecimal derivada(double x){
-		/*StringImproved si = new StringImproved();
-                Double aux;
-                si.setString(expressaoFuncao);
-                String der = si.derivadorInteligente();
-                System.out.println("Prob der: f'(" + x + ") Derivada literal: " + der);
-                //devemos multiplicar os coeficientes
-                System.out.println("Problema na derivada! " + si.resolve(der, x));
-                return BigDecimal.valueOf(Double.parseDouble(si.resolve(der, x)));*/
                 Arvore derivada = Arvore.stringToArvore(expressaoFuncao).derivadaCorreta();
                 return derivada.avaliaArvore(x);
 	}
 	
 	public void resolve(){
-		double erro = n-m;
+		double erro;
 		double raizanterior;
 		raizatual = (m+n)/2;
                 x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"","--","0"));
