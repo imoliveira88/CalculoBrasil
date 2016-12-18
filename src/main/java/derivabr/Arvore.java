@@ -128,10 +128,17 @@ public class Arvore {
         }
         
         if(this.direita != null){
-            arvore += this.direita.imprimeArvore();
+            if(multiplicaIrmaos()) arvore += "*(" + this.direita.imprimeArvore() + ")";
+            else arvore += this.direita.imprimeArvore();
         }
         
         return arvore;
+    }
+    
+    public boolean multiplicaIrmaos(){
+         if(this.tipo == 'f' && this.direita.tipo == 'f') return true;
+         if(this.tipo == 'f' && this.direita.tipo == 'n' && this.direita.embaixo != null) return true;
+         return this.direita.tipo == 'f' && this.tipo == 'n' && this.embaixo != null;
     }
     
     //Retorna as part√≠culas (elementos de combina√ß√£o linear) de expressao
@@ -139,7 +146,7 @@ public class Arvore {
         List<String> lista = new ArrayList<>();
         String atual = "";
         int somaPar = 0;
-        
+                
         if(expressao.length() == 1){
             lista.add(expressao);
             return lista;
@@ -158,7 +165,7 @@ public class Arvore {
         }
         
         lista.add(atual);
-               
+                       
         return lista;
     }
     
@@ -169,18 +176,22 @@ public class Arvore {
         String arvembaixo = "";
         List<String> processado = new ArrayList<>();
         
+        
         for(int i=0; i<expressao.length(); i++){
             if("1234567890.".contains(expressao.charAt(i)+"")) numero += expressao.charAt(i);
             else{
-                funcao = expressao.substring(i,expressao.length());
+                if(i == expressao.length() - 2) funcao = "";
+                else funcao = expressao.substring(i,expressao.length());
                 break;
             }
         }
                 
-        for(int i=0; i<funcao.length(); i++){
-            if(funcao.charAt(i) == '('){
-                arvembaixo = funcao.substring(i+1,funcao.length()-1);
-                funcao = funcao.substring(0,i);
+        if(!funcao.equals("")){
+            for(int i=0; i<funcao.length(); i++){
+                if(funcao.charAt(i) == '('){
+                    arvembaixo = funcao.substring(i+1,funcao.length()-1);
+                    funcao = funcao.substring(0,i);
+                }
             }
         }
                 
@@ -215,58 +226,67 @@ public class Arvore {
         List<String> particulas = Arvore.particulasString(expressao);
         
         for(int j = 0; j < particulas.size(); j++){
-            if(j == 0){
-                if("+-*".contains(particulas.get(j)) && particulas.get(j).length() == 1){
+            if (j == 0) {
+                if ("+-*".contains(particulas.get(j)) && particulas.get(j).length() == 1) {
                     arvore.tipo = 's';
                     arvore.valor = particulas.get(j);
-                }
-                else{
+                } else {
                     coeficiente = Arvore.separaNumeroFuncao(particulas.get(j)).get(0);
                     funcao = Arvore.separaNumeroFuncao(particulas.get(j)).get(1);
                     arvembaixo = Arvore.separaNumeroFuncao(particulas.get(j)).get(2);
                     
-                    if(!coeficiente.equals("") && !funcao.contains("x")){
-                        arvore.tipo = 'n';
-                        arvore.valor = coeficiente;
-                        arvore.embaixo = new Arvore();
-                        arvore.embaixo.tipo = 'f';
-                        arvore.embaixo.valor = funcao;
-                        arvore.embaixo.setEmbaixo(Arvore.stringToArvore(arvembaixo));
-                    }else{
-                        if(funcao.contains("x")){
-                            if(particulas.get(j).length()==1){
-                                arvore.tipo = 'v';
-                                arvore.valor = "x";
-                            }else{
-                                arvore.tipo = 'f';
-                                arvore.valor = "pol";
-                                if(funcao.equals("x")){
-                                    arvore.embaixo = new Arvore('n',"1");
-                                    arvore.embaixo.embaixo = new Arvore('v',"x");
-                                }else{
-                                    arvore.embaixo = new Arvore('n',Arvore.retiraNumero(funcao));
-                                    arvore.embaixo.embaixo = new Arvore('v',"x");
-                                }
-                                if(!coeficiente.equals("")){
-                                    Arvore auxiliar = arvore;
-                                    arvore = new Arvore();
-                                    arvore.setEmbaixo(auxiliar);
-                                    arvore.setTipo('n');
-                                    arvore.setValor(coeficiente);
-                                }
-                            }
-                           
-                        }else{
+                    if (funcao.equals("")) {
+
+                        if (arvembaixo.equals("")) {
+                            arvore.tipo = 'n';
+                            arvore.valor = coeficiente;
+                        } else {
+                            arvore.tipo = 'n';
+                            arvore.valor = coeficiente;
+                            arvore.setEmbaixo(Arvore.stringToArvore(arvembaixo));
+                        }
+                    } else if (!funcao.contains("x")) {
+                        if (!coeficiente.equals("")) {
+                            arvore.tipo = 'n';
+                            arvore.valor = coeficiente;
+                            arvore.embaixo = new Arvore();
+                            arvore.embaixo.tipo = 'f';
+                            arvore.embaixo.valor = funcao;
+                            arvore.embaixo.setEmbaixo(Arvore.stringToArvore(arvembaixo));
+                        } else {
                             arvore.tipo = 'f';
                             arvore.valor = funcao;
-                            arvore.embaixo = new Arvore();
-                            arvore.setEmbaixo(Arvore.stringToArvore(arvembaixo));
+                            if (arvembaixo.equals("x")) {
+                                arvore.setEmbaixo(new Arvore('v', "x"));
+                            } else {
+                                arvore.embaixo = new Arvore();
+                                arvore.setEmbaixo(Arvore.stringToArvore(arvembaixo));
+                            }
+                        }
+                    } else if (particulas.get(j).length() == 1) {
+                        arvore.tipo = 'v';
+                        arvore.valor = "x";
+                    } else {
+                        arvore.tipo = 'f';
+                        arvore.valor = "pol";
+                        if (funcao.equals("x")) {
+                            arvore.embaixo = new Arvore('n', "1");
+                            arvore.embaixo.embaixo = new Arvore('v', "x");
+                        } else {
+                            arvore.embaixo = new Arvore('n', Arvore.retiraNumero(funcao));
+                            arvore.embaixo.embaixo = new Arvore('v', "x");
+                        }
+                        if (!coeficiente.equals("")) {
+                            Arvore auxiliar = arvore;
+                            arvore = new Arvore();
+                            arvore.setEmbaixo(auxiliar);
+                            arvore.setTipo('n');
+                            arvore.setValor(coeficiente);
                         }
                     }
                 }
-            }
-            else{
-                arvore.colocaArvoreDireita(j-1, Arvore.stringToArvore(particulas.get(j)));
+            } else {
+                arvore.colocaArvoreDireita(j - 1, Arvore.stringToArvore(particulas.get(j)));
             }
         }
                 
@@ -354,7 +374,7 @@ public class Arvore {
         }
     }
     
-    //P√µe arv na pr√≥xima direita vaga de this
+    //Pıe arv na prÛxima direita vaga de this
     public Arvore colocaProxDireitaVazia(Arvore arv){
         Arvore arvore = this;
         if(this.direita == null) arvore.setDireita(arv);
@@ -366,12 +386,16 @@ public class Arvore {
     public Arvore derivadaCorreta(){
         Arvore arvore = new Arvore();
         Arvore aux;
-                
+                        
         if(this.tipo == 'n'){
-            arvore.setValor(this.valor);
-            arvore.setTipo(this.tipo);
-            if(this.direita != null) arvore.setDireita(this.direita.derivadaCorreta());
-            if(this.embaixo != null) arvore.setEmbaixo(this.embaixo.derivadaCorreta());
+            if(this.embaixo == null && "+-".contains(this.direita.valor)){
+                arvore = this.direita.derivadaCorreta();
+            }else{
+                arvore.setValor(this.valor);
+                arvore.setTipo(this.tipo);
+                if(this.direita != null) arvore.setDireita(this.direita.derivadaCorreta());
+                if(this.embaixo != null) arvore.setEmbaixo(this.embaixo.derivadaCorreta());
+            }
             return arvore;
         }else{
             if(this.tipo == 's'){
@@ -398,11 +422,9 @@ public class Arvore {
                         aux = new Arvore('n',"1");
                         aux.setEmbaixo(this.embaixo.derivadaCorreta());
                         arvore.colocaProxDireitaVazia(aux);
-                        System.out.println("Caso 1 Aux = " + aux.imprimeArvore());
                     }
                     else{
                         arvore.colocaProxDireitaVazia(this.embaixo.derivadaCorreta());
-                        System.out.println("Caso 2 proxdireita: " + this.embaixo.derivadaCorreta().imprimeArvore());
                     }
                     //arvore.colocaProxDireitaVazia(this.embaixo.derivadaCorreta());
                     if(this.direita != null) arvore.colocaProxDireitaVazia(this.direita.derivadaCorreta());                    
@@ -411,9 +433,7 @@ public class Arvore {
             }
             else return new Arvore('v',"x");
         }
-        
-        System.out.println("√Årvore: " + this.imprimeArvore() + " √Årvore ap√≥s derivada: " + arvore.imprimeArvore());
-        
+                
         return arvore.operaArvore();
     }
     
@@ -471,12 +491,12 @@ public class Arvore {
         if(this.direita != null) arvore.setDireita(this.direita.operaArvore());
         if(this.embaixo != null) arvore.setEmbaixo(this.embaixo.operaArvore());
         
-        System.out.println("√Årvore " + this.imprimeArvore() + " Ap√≥s operada " + arvore.imprimeArvore());
+        System.out.println("¡rvore " + this.imprimeArvore() + " ApÛs operada " + arvore.imprimeArvore());
         
         return arvore;
     }
     
-    //retorna a √°rvore-base correspondente √† derivada da √Årvore cuja cabe√ßa √© "fun√ß√£o" e cuja √Årvore abaixo √© "embaixo"
+    //retorna a ·rvore-base correspondente ‡ derivada da ·rvore cuja cabeÁa È "func„o" e cuja ·rvore abaixo È "embaixo"
     public Arvore arvoreDerivada(){
         Arvore arvore;
         switch(this.valor){
@@ -556,9 +576,10 @@ public class Arvore {
         arvore7.setDireita(arvore6);
         arvore6.setEmbaixo(arvore5);
         
-        System.out.println("√Årvore: " + Arvore.stringToArvore(teste).imprimeArvore() + " Derivada: " + Arvore.stringToArvore(teste).derivadaCorreta().imprimeArvore());
-        System.out.println("Fun√ß√£o(2) = " + Arvore.stringToArvore(teste).avaliaArvore(2.0));
-        System.out.println("Derivada(2) = " + Arvore.stringToArvore(teste).derivadaCorreta().avaliaArvore(2.0));
+        System.out.println("FunÁ„o: " + arvoreString + " Derivada: " + Arvore.stringToArvore(arvoreString).imprimeArvore());
+        //System.out.println("¡rvore: " + Arvore.stringToArvore(teste).imprimeArvore() + " Derivada: " + Arvore.stringToArvore(teste).derivadaCorreta().imprimeArvore());
+        //System.out.println("FunÁ„o(2) = " + Arvore.stringToArvore(teste).avaliaArvore(2.0));
+        //System.out.println("Derivada(2) = " + Arvore.stringToArvore(teste).derivadaCorreta().avaliaArvore(2.0));
         
         //numero direita.valor=* direita-direita=?  
         
@@ -566,7 +587,7 @@ public class Arvore {
         
         //System.out.println("StringToArvore: " + Arvore.stringToArvore(arvoreString).derivadaCorreta().imprimeArvore());
         
-        //System.out.println("√Årvore atual: " + arvore1.imprimeArvore());
+        //System.out.println("√?rvore atual: " + arvore1.imprimeArvore());
         //System.out.println("Derivada da √°rvore atual 2: " + arvore1.derivadaCorreta().imprimeArvore());
         //System.out.println("Valor da fun√ß√£o no ponto 1: " + arvore1.avaliaArvore(1.0));
         //System.out.println("Valor da fun√ß√£o no ponto 1: " + arvore1.derivadaCorreta().avaliaArvore(1.0));

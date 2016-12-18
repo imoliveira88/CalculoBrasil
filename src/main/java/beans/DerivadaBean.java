@@ -57,9 +57,9 @@ public class DerivadaBean extends BeanGeral{
             arvore = Arvore.stringToArvore(this.expressao);
             this.derivada = arvore.derivadaCorreta().imprimeArvore();
 
-            addMensagem("Sua derivada est√° pronta!");
+            addMensagem("Sua derivada est· pronta!");
         } catch (Exception e) {
-            addMensagem("Ocorreu algum erro... Reveja sua express√£o!");
+            addMensagem("Ocorreu algum erro... Reveja sua express„o!");
         }
     }
     
