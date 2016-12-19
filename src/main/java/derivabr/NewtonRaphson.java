@@ -23,12 +23,12 @@ public class NewtonRaphson {
 	}
 	
 	public BigDecimal funcao(double x){
-                Arvore expressao = Arvore.stringToArvore(expressaoFuncao);
+                Arvore expressao = Auxiliar.stringToArvore(expressaoFuncao);
                 return expressao.avaliaArvore(x);    
         }
 	
 	public BigDecimal derivada(double x){
-                Arvore derivada = Arvore.stringToArvore(expressaoFuncao).derivadaCorreta();
+                Arvore derivada = Auxiliar.stringToArvore(expressaoFuncao).derivadaCorreta();
                 return derivada.avaliaArvore(x);
 	}
 	

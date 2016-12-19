@@ -6,6 +6,7 @@
 package beans;
 
 import derivabr.Arvore;
+import derivabr.Auxiliar;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -54,7 +55,7 @@ public class DerivadaBean extends BeanGeral{
             this.derivada = simproved.derivadorInteligente();*/
             
             Arvore arvore = new Arvore();
-            arvore = Arvore.stringToArvore(this.expressao);
+            arvore = Auxiliar.stringToArvore(this.expressao);
             this.derivada = arvore.derivadaCorreta().imprimeArvore();
 
             addMensagem("Sua derivada está pronta!");

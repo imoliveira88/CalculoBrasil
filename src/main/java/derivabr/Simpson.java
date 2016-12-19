@@ -22,7 +22,7 @@ public class Simpson {
     
     public Simpson(String expressaoFuncao, Double esquerda, Double direita, int n){
         this.iteracoes = new ArrayList<>();
-        this.funcao = Arvore.stringToArvore(expressaoFuncao);
+        this.funcao = Auxiliar.stringToArvore(expressaoFuncao);
         this.esquerda = esquerda;
         this.direita = direita;
         this.n = n;
