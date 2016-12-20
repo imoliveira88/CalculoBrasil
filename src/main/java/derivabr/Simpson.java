@@ -1,24 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package derivabr;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Administrador
- */
-public class Simpson {
+public class Simpson implements Latex{
     private Arvore funcao;
     private Double esquerda, direita;
     private int n;
     private List<RaizIteracao> iteracoes;
     private BigDecimal integral;
+    private String latex;
     
     public Simpson(String expressaoFuncao, Double esquerda, Double direita, int n){
         this.iteracoes = new ArrayList<>();
@@ -34,6 +26,14 @@ public class Simpson {
 
     public List<RaizIteracao> getIteracoes() {
         return iteracoes;
+    }
+
+    public String getLatex() {
+        return latex;
+    }
+
+    public void setLatex(String latex) {
+        this.latex = latex;
     }
 
     public void setIteracoes(List<RaizIteracao> iteracoes) {
@@ -84,19 +84,38 @@ public class Simpson {
     public void resolve(){
         double h = (direita-esquerda)/n;
         double x;
-        BigDecimal E = BigDecimal.ZERO;
-        BigDecimal I = BigDecimal.ZERO;
-        BigDecimal P = BigDecimal.ZERO;
+        double E = 0;
+        double P = 0;
+        double I = 0;
+        
+        latex += "Queremos calcular o valor aproximado da integral $\\int^" + direita + "_" + esquerda + funcao.imprimeArvore() + "$.\n\n";
+        latex += "$$ h = \\frac{" + direita + "-" + esquerda + "}{" + n + "}$ = " + "\frac{" + (direita - esquerda) + "}{" + n + "} = " + (direita-esquerda)/n + "$$";
+        latex += "Tendo posse do intervalo de integração, bem como do valor de h, estamos aptos a calcular a integral aproximada por Simpson:\n\n";
+        
         for(int i = 0; i < n+1; i++){
             x = esquerda + i*h;
+            latex += "Iteração: " + i + ", $x_" + i + "$ = " + x + ", $f(x_" + i + ")$ = " + this.funcao(x) + "\n";
             iteracoes.add(new RaizIteracao(x+"",this.funcao(x)+"","",i+""));
-            if(i == 0 || i == n) E.add(this.funcao(x));
+            if(i == 0 || i == n) E += this.funcao(x).doubleValue();
             else{
-                if(i%2 == 1) I.add(this.funcao(x));
-                else P.add(this.funcao(x));
+                if(i%2 == 1) I += this.funcao(x).doubleValue();
+                else P += this.funcao(x).doubleValue();
             }
         }
-        this.integral = (E.add(I.multiply(BigDecimal.valueOf(4.0)))).add(P.multiply(BigDecimal.valueOf(2.0))).multiply(BigDecimal.valueOf(h/3));
+        latex += "\n";
+        latex += "$E = " + E + "$, $P = " + P + "$, $I = " + I + "$\n\n";
+        
+        latex += "Utilizando a fórmula $integral \\approx \\frac{h}{3} \\times (E + 4I + 2P)$, temos: ";        
+        
+        this.integral = BigDecimal.valueOf(h*(E + 4*I + 2*P)/3);
+        
+        latex += "$$" + h/3 + "(" + E + "4\\times " + I + "2\\times " + P + ")$$ \\approx " + this.integral;
+    }
+    
+    @Override
+    public String toLatex(){
+        resolve();
+        return this.latex;
     }
     
 }

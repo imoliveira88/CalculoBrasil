@@ -1,8 +1,6 @@
 package derivabr;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -181,7 +179,7 @@ public class Arvore {
         }
     }
     
-    //Pıe arv na prÛxima direita vaga de this
+    //P√µe arv na pr√≥xima direita vaga de this
     public Arvore colocaProxDireitaVazia(Arvore arv){
         Arvore arvore = this;
         if(this.direita == null) arvore.setDireita(arv);
@@ -298,12 +296,12 @@ public class Arvore {
         if(this.direita != null) arvore.setDireita(this.direita.operaArvore());
         if(this.embaixo != null) arvore.setEmbaixo(this.embaixo.operaArvore());
         
-        System.out.println("¡rvore " + this.imprimeArvore() + " ApÛs operada " + arvore.imprimeArvore());
+        System.out.println("√Årvore " + this.imprimeArvore() + " Ap√≥s operada " + arvore.imprimeArvore());
         
         return arvore;
     }
     
-    //retorna a ·rvore-base correspondente ‡ derivada da ·rvore cuja cabeÁa È "func„o" e cuja ·rvore abaixo È "embaixo"
+    //retorna a √°rvore-base correspondente √† derivada da √°rvore cuja cabe√ßa √© "func√£o" e cuja √°rvore abaixo √© "embaixo"
     public Arvore arvoreDerivada(){
         Arvore arvore;
         switch(this.valor){
@@ -383,9 +381,9 @@ public class Arvore {
         arvore7.setDireita(arvore6);
         arvore6.setEmbaixo(arvore5);
         
-        System.out.println("FunÁ„o: " + arvoreString + " Derivada: " + Auxiliar.stringToArvore(arvoreString).imprimeArvore());
-        //System.out.println("¡rvore: " + Arvore.stringToArvore(teste).imprimeArvore() + " Derivada: " + Arvore.stringToArvore(teste).derivadaCorreta().imprimeArvore());
-        //System.out.println("FunÁ„o(2) = " + Arvore.stringToArvore(teste).avaliaArvore(2.0));
+        System.out.println("Fun√ß√£o: " + arvoreString + " Derivada: " + Auxiliar.stringToArvore(arvoreString).imprimeArvore());
+        //System.out.println("√°rvore: " + Arvore.stringToArvore(teste).imprimeArvore() + " Derivada: " + Arvore.stringToArvore(teste).derivadaCorreta().imprimeArvore());
+        //System.out.println("Fun√ß√£o(2) = " + Arvore.stringToArvore(teste).avaliaArvore(2.0));
         //System.out.println("Derivada(2) = " + Arvore.stringToArvore(teste).derivadaCorreta().avaliaArvore(2.0));
         
         //numero direita.valor=* direita-direita=?  
@@ -394,7 +392,7 @@ public class Arvore {
         
         //System.out.println("StringToArvore: " + Arvore.stringToArvore(arvoreString).derivadaCorreta().imprimeArvore());
         
-        //System.out.println("√?rvore atual: " + arvore1.imprimeArvore());
+        //System.out.println("ÔøΩ?rvore atual: " + arvore1.imprimeArvore());
         //System.out.println("Derivada da √°rvore atual 2: " + arvore1.derivadaCorreta().imprimeArvore());
         //System.out.println("Valor da fun√ß√£o no ponto 1: " + arvore1.avaliaArvore(1.0));
         //System.out.println("Valor da fun√ß√£o no ponto 1: " + arvore1.derivadaCorreta().avaliaArvore(1.0));

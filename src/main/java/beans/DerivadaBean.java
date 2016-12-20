@@ -54,13 +54,12 @@ public class DerivadaBean extends BeanGeral{
             /*StringImproved simproved = new StringImproved(this.expressao);
             this.derivada = simproved.derivadorInteligente();*/
             
-            Arvore arvore = new Arvore();
-            arvore = Auxiliar.stringToArvore(this.expressao);
+            Arvore arvore = Auxiliar.stringToArvore(this.expressao);
             this.derivada = arvore.derivadaCorreta().imprimeArvore();
 
-            addMensagem("Sua derivada est· pronta!");
+            addMensagem("Sua derivada est√° pronta!");
         } catch (Exception e) {
-            addMensagem("Ocorreu algum erro... Reveja sua express„o!");
+            addMensagem("Ocorreu algum erro... Reveja sua express√£o!");
         }
     }
     

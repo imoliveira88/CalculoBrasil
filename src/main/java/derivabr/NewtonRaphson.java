@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewtonRaphson {
+public class NewtonRaphson implements Latex{
 	
 	public int itmax;
 	public double m, n;
@@ -13,6 +13,7 @@ public class NewtonRaphson {
 	public int iteracoes = 0;
         public String expressaoFuncao;
         public List<RaizIteracao> x;
+        public String latex;
 	
 	public NewtonRaphson(){
                 this.x = new ArrayList<>();
@@ -36,11 +37,19 @@ public class NewtonRaphson {
 		double erro;
 		double raizanterior;
 		raizatual = (m+n)/2;
+                
+                latex += "Queremos calcular o valor aproximado da raiz de $^" + this.expressaoFuncao + "= 0$.\n\n";
+                latex += "Utilizando como aproximação inicial $x_0 = " + raizatual + "$, que é o ponto médio do intervalo fornecido, temos:\n\n";
+                
                 x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"","--","0"));
+                
+                latex += "Iteração " + iteracoes + ", x_" + iteracoes + " = " + raizatual + ", f(x_" + iteracoes + ") = " + funcao(raizatual) + ", erro = --";
 		do{
 			raizanterior = raizatual;
                         erro = (funcao(raizatual)).doubleValue()/(derivada(raizatual)).doubleValue();
                         raizatual -= erro;
+                        
+                        latex += "Iteração " + iteracoes + ", x_" + iteracoes + " = " + raizatual + ", f(x_" + iteracoes + ") = " + funcao(raizatual) + ", erro = " + erro;
                         
                         x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"",erro+"",++iteracoes+""));
    
@@ -58,6 +67,11 @@ public class NewtonRaphson {
             nr.resolve();
             
             System.out.println("Raiz atual: " + nr.raizatual + "Iterações: " + nr.iteracoes);
+        }
+        
+        @Override
+        public String toLatex(){
+            return latex;
         }
         
 }

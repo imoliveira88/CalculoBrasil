@@ -5,10 +5,6 @@
  */
 package edo;
 
-/**
- *
- * @author Magalhães Oliveira
- */
 public class MediadorEDO2ordHomo {
     private final int a, b, c;
     

@@ -5,10 +5,6 @@
  */
 package edo;
 
-/**
- *
- * @author Magalhães Oliveira
- */
 public abstract class EDO2ordHomo {
     protected final int a;
     protected final int b;
@@ -31,7 +27,6 @@ public abstract class EDO2ordHomo {
         resposta += "Equação característica: " + "$" + this.eqCaracteristica() + "$" + "\n\n";
         
         resposta += "$$\\Delta = " + "(" + this.b + ")^2 - 4 \\times (" + this.a + ") \\times (" + this.c + ") = " + delta + "$$\n\n";
-        
         resposta += this.passoFinal();
         
         return resposta;
@@ -48,21 +43,4 @@ public abstract class EDO2ordHomo {
         return this.a + "m^2 + " + this.b + "m + " + this.c + " = 0";
     }
     
-    public static double duasCasas(double valor){
-        double parcial;
-        parcial = Math.round(100*valor);
-        return parcial/100;
-    }
-    
-    public static String sinalCorreto(char sinal, int valor){
-        String parcial = "";
-        if(sinal == '+') return "" + valor;
-        else{
-            if(valor >= 0) return "-" + valor;
-            else{
-                parcial += '+' + Math.abs(valor);
-                return parcial;
-            }
-        }
-    }
 }
