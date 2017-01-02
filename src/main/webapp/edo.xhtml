@@ -29,13 +29,14 @@
                                     <h:outputText value="c = " />
                                     <h:inputText id="c" value="#{edoBean.c}" size="3" />
 
-                                    <h:commandButton value="Resolva!" action="#{edoBean.resolver()}" class="botao" />
-                                    <h:outputText id="oculto" value="" />
-
-                                    <h:outputText value="Solução em LaTeX: " />
-                                    <h:inputTextarea value="#{edoBean.resposta}" cols="100" rows="30" />
+                                    <h:commandButton id="resolva" value="Resolva!" action="#{edoBean.resolver()}" class="botao" />
+                                    <p:commandButton id="cnBtn" value="LaTeX" class="botao" />
 
                                 </h:panelGrid>
+                                
+                                <p:overlayPanel id="imagePanel" for="cnBtn" showCloseIcon="true">
+                                        <h:inputTextarea value="#{edoBean.resposta}" cols="100" rows="30" />
+                                </p:overlayPanel>
 
                             </p:fieldset>
                     </h:form>

@@ -33,12 +33,16 @@
                                     <h:inputText id="n" value="#{simpsonBean.n}" size="3" />
 
                                     <h:commandButton value="Resolva!" action="#{simpsonBean.resolver()}" class="botao" />
-                                    <h:outputText id="oculto" value="" />
+                                    <p:commandButton id="cnBtn" value="LaTeX" class="botao" />
 
                                     <h:outputText value="Integral aproximada: " />
                                     <h:outputText value="#{simpsonBean.integral}" />
 
                                 </h:panelGrid>
+                                
+                                <p:overlayPanel id="imagePanel" for="cnBtn" showCloseIcon="true">
+                                        <h:inputTextarea value="#{simpsonBean.resposta}" cols="100" rows="10" />
+                                </p:overlayPanel>
 
                                 <p:dataTable var="x" value="#{simpsonBean.iteracoes}">
                                     <p:column headerText="i">

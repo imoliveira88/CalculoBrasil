@@ -36,7 +36,7 @@
                                     <h:inputText id="erromax" value="#{calculoNBean.erromax}" size="3" />
 
                                     <h:commandButton value="Resolva!" action="#{calculoNBean.resolver()}" class="botao" />
-                                    <h:outputText id="oculto" value="" />
+                                    <p:commandButton id="cnBtn" value="LaTeX" class="botao" />
 
                                     <h:outputText value="Raiz aproximada: " />
                                     <h:outputText value="#{calculoNBean.raizatual}" />
@@ -45,6 +45,10 @@
                                     <h:outputText value="#{calculoNBean.iteracoes}" />
 
                                 </h:panelGrid>
+                                
+                                <p:overlayPanel id="imagePanel" for="cnBtn" showCloseIcon="true">
+                                        <h:inputTextarea value="#{calculoNBean.resposta}" cols="100" rows="20" />
+                                </p:overlayPanel>
 
                                 <p:dataTable var="x" value="#{calculoNBean.x}">
                                     <p:column headerText="i">

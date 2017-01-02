@@ -10,18 +10,19 @@ import derivabr.RaizIteracao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Administrador
  */
 @ManagedBean(name = "calculoNBean")
-@SessionScoped
+@RequestScoped
 public class CalculoNBean extends BeanGeral{
     private double m,n,raizatual,erromax;
     private int iteracoes, itmax;
     private String expressaoFuncao;
+    private String resposta;
     private List<RaizIteracao> x;
     
     public CalculoNBean(){
@@ -50,6 +51,14 @@ public class CalculoNBean extends BeanGeral{
 
     public void setN(double n) {
         this.n = n;
+    }
+
+    public String getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(String resposta) {
+        this.resposta = resposta;
     }
 
     public double getRaizatual() {
@@ -107,6 +116,8 @@ public class CalculoNBean extends BeanGeral{
 
             iteracoes = nr.iteracoes;
             raizatual = nr.raizatual;
+            
+            resposta = nr.toLatex();
             
             this.addMensagem("A raiz aproximada foi calculada!");
             

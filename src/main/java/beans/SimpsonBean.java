@@ -5,20 +5,19 @@
  */
 package beans;
 
-import derivabr.Arvore;
 import derivabr.RaizIteracao;
 import derivabr.Simpson;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Administrador
  */
 @ManagedBean(name = "simpsonBean")
-@SessionScoped
+@RequestScoped
 public class SimpsonBean extends BeanGeral{
     
     private String expressaoFuncao;
@@ -26,6 +25,7 @@ public class SimpsonBean extends BeanGeral{
     private int n;
     private List<RaizIteracao> iteracoes;
     private BigDecimal integral;
+    private String resposta;
 
     public String getExpressaoFuncao() {
         return expressaoFuncao;
@@ -43,6 +43,15 @@ public class SimpsonBean extends BeanGeral{
     public void setEsquerda(Double esquerda) {
         this.esquerda = esquerda;
     }
+
+    public String getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(String resposta) {
+        this.resposta = resposta;
+    }
+    
 
     public Double getDireita() {
         return direita;
@@ -83,6 +92,7 @@ public class SimpsonBean extends BeanGeral{
             simp.resolve();
             this.integral = simp.getIntegral();
             this.iteracoes = simp.getIteracoes();
+            this.resposta = simp.toLatex();
             this.addMensagem("A integral aproximada foi calculada!");
         }catch(Exception e){
             this.addMensagem("Houve algum erro... revise suas entradas!");

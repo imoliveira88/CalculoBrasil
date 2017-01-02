@@ -21,6 +21,7 @@ public class NewtonRaphson implements Latex{
 		this.m = 0;
 		this.n = 0;
 		this.erromax = 0;
+                this.latex = "";
 	}
 	
 	public BigDecimal funcao(double x){
@@ -43,18 +44,20 @@ public class NewtonRaphson implements Latex{
                 
                 x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"","--","0"));
                 
-                latex += "Iteração " + iteracoes + ", x_" + iteracoes + " = " + raizatual + ", f(x_" + iteracoes + ") = " + funcao(raizatual) + ", erro = --";
+                latex += "Iteração " + iteracoes + ", x_" + iteracoes + " = " + raizatual + ", f(x_" + iteracoes + ") = " + funcao(raizatual) + ", erro = --\n\n";
 		do{
 			raizanterior = raizatual;
                         erro = (funcao(raizatual)).doubleValue()/(derivada(raizatual)).doubleValue();
                         raizatual -= erro;
                         
-                        latex += "Iteração " + iteracoes + ", x_" + iteracoes + " = " + raizatual + ", f(x_" + iteracoes + ") = " + funcao(raizatual) + ", erro = " + erro;
-                        
                         x.add(new RaizIteracao(raizatual+"",funcao(raizatual)+"",erro+"",++iteracoes+""));
+                        
+                        latex += "Iteração " + iteracoes + ", x_" + iteracoes + " = " + raizatual + ", f(x_" + iteracoes + ") = " + funcao(raizatual) + ", erro = " + erro + "\n\n";
    
 			erro = Math.abs(erro);
 		}while(iteracoes<itmax && erro>erromax);
+                
+                latex += "Portanto, a raiz aproximada é $" + raizatual + "$ com erro absoluto de $" + erro + "$";
 	}
         
         public static void main(String[] args){
@@ -71,6 +74,9 @@ public class NewtonRaphson implements Latex{
         
         @Override
         public String toLatex(){
+            this.latex = "";
+            this.x = new ArrayList<>();
+            this.resolve();
             return latex;
         }
         

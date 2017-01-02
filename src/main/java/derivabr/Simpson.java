@@ -17,6 +17,7 @@ public class Simpson implements Latex{
         this.funcao = Auxiliar.stringToArvore(expressaoFuncao);
         this.esquerda = esquerda;
         this.direita = direita;
+        this.latex = "";
         this.n = n;
     }
 
@@ -89,12 +90,12 @@ public class Simpson implements Latex{
         double I = 0;
         
         latex += "Queremos calcular o valor aproximado da integral $\\int^" + direita + "_" + esquerda + funcao.imprimeArvore() + "$.\n\n";
-        latex += "$$ h = \\frac{" + direita + "-" + esquerda + "}{" + n + "}$ = " + "\frac{" + (direita - esquerda) + "}{" + n + "} = " + (direita-esquerda)/n + "$$";
+        latex += "$$ h = \\frac{" + direita + "-" + esquerda + "}{" + n + "}$ = " + "\\frac{" + (direita - esquerda) + "}{" + n + "} = " + (direita-esquerda)/n + "$$";
         latex += "Tendo posse do intervalo de integração, bem como do valor de h, estamos aptos a calcular a integral aproximada por Simpson:\n\n";
         
         for(int i = 0; i < n+1; i++){
             x = esquerda + i*h;
-            latex += "Iteração: " + i + ", $x_" + i + "$ = " + x + ", $f(x_" + i + ")$ = " + this.funcao(x) + "\n";
+            latex += "Iteração: " + i + ", $x_" + i + "$ = " + x + ", $f(x_" + i + ")$ = " + this.funcao(x) + "\n\n";
             iteracoes.add(new RaizIteracao(x+"",this.funcao(x)+"","",i+""));
             if(i == 0 || i == n) E += this.funcao(x).doubleValue();
             else{
@@ -105,15 +106,17 @@ public class Simpson implements Latex{
         latex += "\n";
         latex += "$E = " + E + "$, $P = " + P + "$, $I = " + I + "$\n\n";
         
-        latex += "Utilizando a fórmula $integral \\approx \\frac{h}{3} \\times (E + 4I + 2P)$, temos: ";        
+        latex += "Utilizando a fórmula $integral \\approx \\frac{h}{3} \\times (E + 4I + 2P)$, temos: \n";        
         
         this.integral = BigDecimal.valueOf(h*(E + 4*I + 2*P)/3);
         
-        latex += "$$" + h/3 + "(" + E + "4\\times " + I + "2\\times " + P + ")$$ \\approx " + this.integral;
+        latex += "$$" + h/3 + "(" + E + "4\\times " + I + "2\\times " + P + ") \\approx " + this.integral + "$$";
     }
     
     @Override
     public String toLatex(){
+        this.latex = "";
+        this.iteracoes = new ArrayList<>();
         resolve();
         return this.latex;
     }
