@@ -22,6 +22,5 @@ public class MediadorEDO2ordHomo {
             if(delta == 0) return new EDO2ordHomo2(a,b,c).resolve();
             else return new EDO2ordHomo3(a,b,c).resolve();
         }
-    }
-    
+    }   
 }

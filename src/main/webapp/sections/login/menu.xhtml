@@ -1,18 +1,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
    <head>
         <title>IGNORED</title>        
    </head>
    <body>        
-      <ui:composition>  
+      <ui:composition>
+          
           <table id="menu" align='center'>
             <tr>
-                <td onclick="location.href='derivacao.xhtml'">Derivação</td>
-                <td onclick="location.href='simpson.xhtml'">Integração Numérica</td>
-                <td onclick="location.href='cn.xhtml'">Cálculo de Raízes</td>
+                <td>
+                    <h:form>  
+                        <p:menubar>
+                            <p:submenu label="Cálculo Numérico">
+                                <p:menuitem value="Newton-Raphson" url="cn.xhtml" />
+                                <p:menuitem value="Regra de Simpson" url="simpson.xhtml" />
+                            </p:submenu>
+
+                            <p:submenu label="Derivação">
+                                <p:menuitem value="Derivada literal" url="derivacao.xhtml" />
+                            </p:submenu>
+
+                            <p:submenu label="EDO">
+                                <p:menuitem value="EDO de Segunda Ordem" url="edo.xhtml" />
+                            </p:submenu>
+
+                        </p:menubar>
+                    </h:form>
+                </td>
             </tr>
         </table>   	
       </ui:composition>
