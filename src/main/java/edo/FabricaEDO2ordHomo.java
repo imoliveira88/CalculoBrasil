@@ -5,10 +5,10 @@
  */
 package edo;
 
-public class MediadorEDO2ordHomo {
+public class FabricaEDO2ordHomo {
     private final int a, b, c;
     
-    public MediadorEDO2ordHomo(int a, int b, int c){
+    public FabricaEDO2ordHomo(int a, int b, int c){
         this.a = a;
         this.b = b;
         this.c = c;

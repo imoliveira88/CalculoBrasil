@@ -32,8 +32,7 @@ public class EDO2ordHomo1 extends EDO2ordHomo{
         resposta += "Portanto, \n\n";
         
         resposta += "$$"
-                 + "\\begin\n" +
-"                 + \"\\\\b{array}{l}\n"
+                 + "\\begin{array}{l}\n"
                  + "m1 = " + Auxiliar.duasCasas(p1) + "- i \\times " + Auxiliar.duasCasas(p2) + "\\" + "\\" + "\n"
                  + "m2 = " + Auxiliar.duasCasas(p1) + "+ i \\times " + Auxiliar.duasCasas(p2) + "\n"
                  + "\\end{array}$$\n\n";

@@ -5,7 +5,7 @@
  */
 package beans;
 
-import edo.MediadorEDO2ordHomo;
+import edo.FabricaEDO2ordHomo;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -54,7 +54,7 @@ public class EDOBean extends BeanGeral{
     
     public void resolver(){
         try{
-            this.resposta = (new MediadorEDO2ordHomo(a,b,c)).resolve();
+            this.resposta = (new FabricaEDO2ordHomo(a,b,c)).resolve();
             this.addMensagem("Resolução em formato LaTeX pronta!");
         }catch(Exception e){
             this.addMensagem("Houve algum erro! Revise os formatos e tente novamente!");
